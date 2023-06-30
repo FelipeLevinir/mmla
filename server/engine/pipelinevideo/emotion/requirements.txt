@@ -1,0 +1,5 @@
+deepface==0.0.75
+helpers==0.2.0
+numpy==1.24.1
+opencv-python==4.7.0.68
+pika==1.3.1
