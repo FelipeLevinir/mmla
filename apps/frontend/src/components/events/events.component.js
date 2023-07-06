@@ -114,20 +114,23 @@ const handleCreateMark = async () => {
 
   // Asegúrate de que selectedMarkOptions contenga los IDs correctos de mark_type
   const markTypeIds = selectedMarkOptions.map(option => option.value);
+  console.log(markTypeIds);
 
   try {
     // Crear FormData para enviar los datos como x-www-form-urlencoded
     let formData = new FormData();
     formData.append('comment', comment);
     formData.append('time_in_video', timeInVideo);
+    formData.append('mark_type', JSON.stringify(markTypeIds));
+    //formData.append('mark_type',[markTypeIds]);
 
     // Añadir cada mark_type_id al formData
-    markTypeIds.forEach(markTypeId => formData.append('mark_type', markTypeId));
+    // markTypeIds.forEach(markTypeId => formData.append('mark_type', markTypeId));
 
     // Llamar al servicio para crear la marca
     await MarkService.create(experimentId, eventId, formData);
     console.log('Marca creada exitosamente');
-    setShowCreateMarkModal(false); // Asumiendo que tienes un estado para controlar la visibilidad del modal
+    setShowCreateMarkModal(false);
   } catch (error) {
     console.error('Hubo un error al crear la Marca:', error);
   }
@@ -147,10 +150,8 @@ const handleCreateMark = async () => {
       await EventService.create(id_activity, data);
       console.log('Intervalo creado exitosamente');
 
-      // Actualizar eventos desde el servidor
       fetchEvents();
 
-      // Cierra el modal
       setShowModal(false);
     } catch (error) {
       console.error('Hubo un error al crear el intervalo:', error);
